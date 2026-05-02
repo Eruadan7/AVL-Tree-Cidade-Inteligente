@@ -274,7 +274,7 @@ int main() {
                 while (getchar() != '\n');
                 break;
             }
-            deletarEvento(&rootPtr, id);
+            rootPtr = deletarEvento(&rootPtr, id);
             break;
         }
         
