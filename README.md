@@ -137,7 +137,7 @@ gcc evento.c main.c -o programa -Wall -std=c99
 | `main.c`     | Interface com o usuário — menus e leitura de entradas            |
 | `programa.exe` | Executável pré-compilado para Windows                          |
 
-# Exemplo de uso:
+# Testes:
 
 1. Adicionamos um evento na árvore digitando "1" no menu principal:
 <div align="center">
@@ -169,9 +169,24 @@ Deve-se informar o id, o tipo de evento, a severidade e a região do evento. Dat
   <img src="capturas/print6.png" alt="Métricas da árvore" width="600">
 </div>
 
-6. No menu principal, digitamos "0" para fechar o sistema:
+6. Numa nova árvore, adicionamos os eventos com IDs [40, 50, 30, 20] nessa ordem e mostramos em pre-ordem:
 <div align="center">
-  <img src="capturas/print7.png" alt="Sair do sistema" width="600">
+  <img src="capturas/print7.png" alt="Adicionar eventos e mostrar" width="600">
+</div>
+
+7. Agora removemos o evento com ID 50 após torná-lo RESOLVIDO para ver o rebalanceamento:
+<div align="center">
+  <img src="capturas/print8.png" alt="Rebalanceamento" width="600">
+</div>
+
+8. Também é possível conferir nas métricas da árvore:
+<div align="center">
+  <img src="capturas/print9.png" alt="métricas" width="600">
+</div>
+
+9. No menu principal, digitamos "0" para fechar o sistema:
+<div align="center">
+  <img src="capturas/print10.png" alt="Sair do sistema" width="600">
 </div>
 
 
