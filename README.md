@@ -171,7 +171,7 @@ Deve-se informar o id, o tipo de evento, a severidade e a região do evento. Dat
 
 6. Numa nova árvore, adicionamos os eventos com IDs [40, 50, 30, 20] nessa ordem e mostramos em pre-ordem:
 <div align="center">
-  <img src="capturas/print7.png" alt="Adicionar eventos e mostrar" width="600">
+  <img src="capturas/print0.png" alt="Adicionar eventos e mostrar" width="600">
 </div>
 
 7. Agora removemos o evento com ID 50 após torná-lo RESOLVIDO para ver o rebalanceamento:
