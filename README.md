@@ -159,7 +159,7 @@ Deve-se informar o id, o tipo de evento, a severidade e a região do evento. Dat
   <img src="capturas/print4.png" alt="Alterar status" width="600">
 </div>
 
-4. Agora que esse evento está com status "RESOLVIDO", podemos remover da árvore. Basta escolher a opção "Deletar Evento Resolvido" digitando "4" no menu principal. Essa opção lista todos os eventos ativos. Agora digitamos o id de nosso alvo:
+4. Agora que esse evento está com status "RESOLVIDO", podemos remover da árvore. Basta escolher a opção "Deletar Evento Resolvido" digitando "4" no menu principal. Essa opção lista todos os eventos resolvidos que podemos deletar. Agora digitamos o id de nosso alvo:
 <div align="center">
   <img src="capturas/print5.png" alt="Deletar evento" width="600">
 </div>
