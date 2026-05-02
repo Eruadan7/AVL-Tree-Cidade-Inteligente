@@ -1,4 +1,4 @@
-# Sistema de Gerenciamento de Eventos Criticos de uma Cidade Inteligente
+# Sistema de Gerenciamento de Eventos Críticos de uma Cidade Inteligente
 
 ## Descrição Geral
 
@@ -26,6 +26,7 @@ Este programa implementa um **sistema de gerenciamento de eventos urbanos** base
 **Cadastro**
 - Inserção de eventos com ID manual ou gerado aleatoriamente
 - Garantia de IDs únicos com rejeição automática de duplicatas
+- Inserção com rebalanceamento automático da árvore
 
 **Consultas**
 - Listagem de todos os eventos (pré-ordem)
