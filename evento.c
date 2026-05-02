@@ -33,9 +33,9 @@ struct dataHora obterDataHoraAtual() {
 }
 
 // formatação dos enum
-const char* NOME_TIPO[] = {"ACIDENTE_TRANSITO", "FALHA_SEMAFORO", "INTERRUPCAO_ENERGIA", "ALAGAMENTO", "INCENDIO"};
-const char* NOME_REGIAO[] = {"NORTE", "SUL", "LESTE", "OESTE", "CENTRO"};
-const char* NOME_STATUS[] = {"ATIVO", "RESOLVIDO"};
+const char* NOME_TIPO[] = {"PREENCHIMENTO", "ACIDENTE_TRANSITO", "FALHA_SEMAFORO", "INTERRUPCAO_ENERGIA", "ALAGAMENTO", "INCENDIO"};
+const char* NOME_REGIAO[] = {"PREENCHIMENTO", "NORTE", "SUL", "LESTE", "OESTE", "CENTRO"};
+const char* NOME_STATUS[] = {"PREENCHIMENTO", "ATIVO", "RESOLVIDO"};
 
 // struct de evento
 struct eventNode{
@@ -287,51 +287,45 @@ void listarEventosIntervaloSeveridade(EventNodePtr eventPtr, int inicio, int fim
     // Quando eventPtr == NULL, a função simplesmente retorna (fim da recursão)
 }
 
-// listar eventos ativos de uma região específica em pre-order:
+// listar eventos ativos de uma região específica em ordem (IDs crescentes)
 void listarEventosRegiao(EventNodePtr eventPtr, enum regiaoCidade regiao) {
-    // Caso base: se o nó atual não é nulo, continua a busca
     if (eventPtr != NULL) {
-        // Verifica se o evento está ATIVO
-        if (eventPtr->status == ATIVO) {
-            // Verifica se está na região
-            if (eventPtr->regiao == regiao) {
-                // Exibe os dados do evento que atende aos critérios
-                printf("ID: %d, Altura: %d, Tipo de Evento: %s, Severidade: %d, Regiao: %s, Status: %s, Data/Hora: %02d/%02d/%04d %02d:%02d:%02d\n", 
-                       eventPtr->id,
-                       eventPtr->altura,
-                       NOME_TIPO[eventPtr->tipo],
-                       eventPtr->severidade,
-                       NOME_REGIAO[eventPtr->regiao],
-                       NOME_STATUS[eventPtr->status],
-                       eventPtr->dHora);
-            }
-        }
         // Percorre a subárvore ESQUERDA (IDs menores)
         listarEventosRegiao(eventPtr->leftPtr, regiao);
+        
+        // Verifica o nó atual
+        if (eventPtr->status == ATIVO && eventPtr->regiao == regiao) {
+            // Exibe os dados do evento que atende aos critérios
+            printf("ID: %d, Altura: %d, Tipo de Evento: %s, Severidade: %d, Regiao: %s, Status: %s, Data/Hora: %02d/%02d/%04d %02d:%02d:%02d\n", 
+                   eventPtr->id,
+                   eventPtr->altura,
+                   NOME_TIPO[eventPtr->tipo],
+                   eventPtr->severidade,
+                   NOME_REGIAO[eventPtr->regiao],
+                   NOME_STATUS[eventPtr->status],
+                   eventPtr->dHora);
+        }
+        
         // Percorre a subárvore DIREITA (IDs maiores)
         listarEventosRegiao(eventPtr->rightPtr, regiao);
     }
-    // Quando eventPtr == NULL, a função simplesmente retorna (fim da recursão)
 }
 
-// listar eventos ativos de acordo com seu intervalo de id em pre-order:
+// listar eventos de acordo com seu intervalo de id em pre-order:
 void listarEventosIntervaloID(EventNodePtr eventPtr, int inicio, int fim) {
     // Caso base: se o nó atual não é nulo, continua a busca
     if (eventPtr != NULL) {
-        // Verifica se o evento está ATIVO
-        if (eventPtr->status == ATIVO) {
-            // Verifica se o id está dentro do intervalo [inicio, fim]
-            if (eventPtr->id >= inicio && eventPtr->id <= fim) {
-                // Exibe os dados do evento que atende aos critérios
-                printf("ID: %d, Altura: %d, Tipo de Evento: %s, Severidade: %d, Regiao: %s, Status: %s, Data/Hora: %02d/%02d/%04d %02d:%02d:%02d\n", 
-                       eventPtr->id,
-                       eventPtr->altura,
-                       NOME_TIPO[eventPtr->tipo],
-                       eventPtr->severidade,
-                       NOME_REGIAO[eventPtr->regiao],
-                       NOME_STATUS[eventPtr->status],
-                       eventPtr->dHora);
-            }
+        // Verifica se o id está dentro do intervalo [inicio, fim]
+        if (eventPtr->id >= inicio && eventPtr->id <= fim) {
+            // Exibe os dados do evento que atende aos critérios
+            printf("ID: %d, Altura: %d, Tipo de Evento: %s, Severidade: %d, Regiao: %s, Status: %s, Data/Hora: %02d/%02d/%04d %02d:%02d:%02d\n", 
+                    eventPtr->id,
+                    eventPtr->altura,
+                    NOME_TIPO[eventPtr->tipo],
+                    eventPtr->severidade,
+                    NOME_REGIAO[eventPtr->regiao],
+                    NOME_STATUS[eventPtr->status],
+                    eventPtr->dHora);
         }
         // Percorre a subárvore ESQUERDA (IDs menores)
         listarEventosIntervaloID(eventPtr->leftPtr, inicio, fim);
@@ -359,6 +353,7 @@ EventNodePtr deletarEvento(EventNodePtr *eventPtr, int id){
         if ((*eventPtr)->leftPtr == NULL && (*eventPtr)->rightPtr == NULL) {
             free(*eventPtr);
             *eventPtr = NULL;
+            printf("Evento removido com sucesso!");
             return *eventPtr;
         }
         // Caso 2: tem filho à direita
@@ -366,6 +361,7 @@ EventNodePtr deletarEvento(EventNodePtr *eventPtr, int id){
             EventNodePtr temp = (*eventPtr)->rightPtr;
             free(*eventPtr);
             *eventPtr = temp;
+            printf("Evento removido com sucesso!");
             return *eventPtr;
         }
         // Caso 3: tem filho à esquerda
@@ -373,6 +369,7 @@ EventNodePtr deletarEvento(EventNodePtr *eventPtr, int id){
             EventNodePtr temp = (*eventPtr)->leftPtr;
             free(*eventPtr);
             *eventPtr = temp;
+            printf("Evento removido com sucesso!");
             return *eventPtr;
         }
         // Caso 4: tem dois filhos
@@ -447,11 +444,13 @@ EventNodePtr alterarStatus(EventNodePtr *eventPtr, int id) {
         // Se o status atual é ATIVO, muda para RESOLVIDO e retorna
         if ((*eventPtr)->status == ATIVO) {
             (*eventPtr)->status = RESOLVIDO;
+            printf("Status alterado com sucesso!\n");
             return *eventPtr;
         }
         // Se o status atual é RESOLVIDO, muda para ATIVO e retorna
         if ((*eventPtr)->status == RESOLVIDO) {
             (*eventPtr)->status = ATIVO;
+            printf("Status alterado com sucesso!\n");
             return *eventPtr;
         }
     }
@@ -482,6 +481,7 @@ EventNodePtr alterarSeveridade(EventNodePtr *eventPtr, int id, int severidade) {
         }
         // Altera a severidade para o novo valor passado
         (*eventPtr)->severidade = severidade;
+        printf("Severidade alterada com sucesso!\n");
         return *eventPtr;  // retorna o nó alterado
     }
     // Caso 3: ID buscado é MENOR que o ID atual → vai para subárvore ESQUERDA
