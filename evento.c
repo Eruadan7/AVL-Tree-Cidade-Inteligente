@@ -210,8 +210,8 @@ void preOrderAtivos(EventNodePtr eventPtr){
                NOME_REGIAO[eventPtr->regiao],
                NOME_STATUS[eventPtr->status],
                eventPtr->dHora);
-        preOrder(eventPtr->leftPtr);
-        preOrder(eventPtr->rightPtr);
+        preOrderAtivos(eventPtr->leftPtr);
+        preOrderAtivos(eventPtr->rightPtr);
     }
 }
 
@@ -388,6 +388,8 @@ EventNodePtr deletarEvento(EventNodePtr *eventPtr, int id){
             (*eventPtr)->regiao = (*sucessorPtr)->regiao;
             (*eventPtr)->status = (*sucessorPtr)->status;
 
+            // Garante que o sucessor pode ser removido pela chamada recursiva
+            (*sucessorPtr)->status = RESOLVIDO;
             // Remove o sucessor (que terá 0 ou 1 filho)
             int idSucessor = (*sucessorPtr)->id;
             (*eventPtr)->rightPtr = deletarEvento(&((*eventPtr)->rightPtr), idSucessor);
@@ -453,6 +455,8 @@ EventNodePtr alterarStatus(EventNodePtr *eventPtr, int id) {
             printf("Status alterado com sucesso!\n");
             return *eventPtr;
         }
+        // retorno de segurança
+        return *eventPtr;
     }
     // Caso 3: ID buscado é MENOR que o ID atual → vai para subárvore ESQUERDA
     else if ((*eventPtr)->id > id) {
