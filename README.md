@@ -4,7 +4,6 @@ Sistema de Gerenciamento de Eventos Criticos de uma Cidade Inteligente
 
 Exemplo de uso:
 1. Adicionamos um evento na árvore digitando "1" no menu principal:
-![alt text](capturas/print1-1.png)
 Deve-se informar o id, o tipo de evento, a severidade e a região do evento. Data e hora são atribuídos automaticamente:
 ![alt text](capturas/print2.png)
 2. Podemos visualizar o que digitamos. Inserimos "2" para entrar no menu de consultas e depois "1" para listar todos os eventos da ávore:
